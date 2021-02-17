@@ -2,7 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import {
   RegisterUserRequest as Request,
   RegisterUserResponse as Response,
-} from '../../../domain/auth/dto/RegisterUserDto';
+} from '../../../application/auth/dto/RegisterUserDto';
 
 const emailExample = 'test@test.com';
 

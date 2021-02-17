@@ -10,8 +10,7 @@ export default class UserRepository {
       const user = await this.user.create(userDocument);
       return user;
     } catch (error) {
-      if (error.code === 11000)
-        throw new DuplicatedException('User already exists');
+      if (error.code === 11000) throw new DuplicatedException();
       throw error;
     }
   }

@@ -1,10 +1,10 @@
-import { validateSync } from 'class-validator';
 import AuthDomain from './AuthDomain';
 import {
   RegisterUserRequest,
   RegisterUserResponse,
 } from './dto/RegisterUserDto';
-import UserRepository from './UserRepository';
+import UserRepository from '../../domain/user/UserRepository';
+import IUser from './schema/User';
 
 export default class AuthService {
   constructor(
@@ -17,7 +17,7 @@ export default class AuthService {
   ): Promise<RegisterUserResponse> {
     this.authDomain.validateRequest(new RegisterUserRequest(request));
 
-    const user = await this.userRepository.create(request);
+    const user: IUser = await this.userRepository.create(request);
     return { email: user.email };
   }
 }

@@ -12,13 +12,13 @@ import {
   ApiInternalServerErrorResponse,
   ApiTags,
 } from '@nestjs/swagger';
-import InvalidRequestException from '../../domain/auth/exception/InvalidRequestException';
-import AuthService from '../../domain/auth/AuthService';
+import InvalidRequestException from '../../application/auth/exception/InvalidRequestException';
+import AuthService from '../../application/auth/AuthService';
 import {
   RegisterUserRequest,
   RegisterUserResponse,
 } from './dto/RegisterUserDto';
-import DuplicatedException from '../../domain/auth/exception/DuplicatedException';
+import DuplicatedException from '../../domain/user/exception/DuplicatedException';
 
 @Controller('/api/auth')
 @ApiTags('auth')
