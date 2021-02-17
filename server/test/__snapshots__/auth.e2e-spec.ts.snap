@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AuthController (e2e) POST /api/auth should return the user 1`] = `"{\\"email\\":\\"test@test.com\\"}"`;
+
+exports[`AuthController (e2e) POST /api/auth should throw bad request exception 1`] = `"{\\"statusCode\\":400,\\"message\\":[\\"email must be an email\\",\\"password must be longer than or equal to 6 characters\\"],\\"error\\":\\"Bad Request\\"}"`;
+
+exports[`AuthController (e2e) POST /api/auth should throw conflict exception 1`] = `"{\\"statusCode\\":409,\\"message\\":\\"User already exists\\",\\"error\\":\\"Conflict\\"}"`;

@@ -7,6 +7,9 @@ dev:
 build:
 	npm run build
 
+infra/up:
+	docker-compose up -d mongo mongo-express
+
 up: build
 	docker-compose up --build -d
 
@@ -23,10 +26,10 @@ test/updateSnapshots:
 test/cov:
 	npm run test:cov
 
-test/e2e:
+test/e2e: infra/up
 	npm run test:e2e
 
-test/e2e/updateSnapshots:
+test/e2e/updateSnapshots: infra/up
 	npm run test:e2e:updateSnapshots
 
 format:

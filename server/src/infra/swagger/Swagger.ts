@@ -10,6 +10,7 @@ export default class Swagger {
       .setDescription(description)
       .setVersion(version)
       .addTag('health', 'Operations about helth application')
+      .addTag('auth', 'Operations about authentication')
       .build();
   }
 
