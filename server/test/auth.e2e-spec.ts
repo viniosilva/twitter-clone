@@ -5,7 +5,7 @@ import AppModule from '../src/AppModule';
 import mongodb from '../src/infra/mongodb';
 
 describe('AuthController (e2e)', () => {
-  const path = '/api/auth';
+  const pathRegister = '/api/auth/register';
   let app: INestApplication;
 
   beforeEach(async () => {
@@ -25,11 +25,11 @@ describe('AuthController (e2e)', () => {
     await mongodb.disconnect();
   });
 
-  describe('POST /api/auth', () => {
+  describe('POST /api/auth/register', () => {
     it('should return the user', () => {
       const payload = { email: 'test@test.com', password: 'secret' };
       return request(app.getHttpServer())
-        .post(path)
+        .post(pathRegister)
         .send(payload)
         .expect(201)
         .expect((res: Response) => {
@@ -39,10 +39,10 @@ describe('AuthController (e2e)', () => {
 
     it('should throw conflict exception', async () => {
       const payload = { email: 'test@test.com', password: 'secret' };
-      await request(app.getHttpServer()).post(path).send(payload);
+      await request(app.getHttpServer()).post(pathRegister).send(payload);
 
       return request(app.getHttpServer())
-        .post(path)
+        .post(pathRegister)
         .send(payload)
         .expect(409)
         .expect((res: Response) => {
@@ -53,7 +53,7 @@ describe('AuthController (e2e)', () => {
     it('should throw bad request exception', () => {
       const payload = { email: 'test', password: '1' };
       return request(app.getHttpServer())
-        .post(path)
+        .post(pathRegister)
         .send(payload)
         .expect(400)
         .expect((res: Response) => {

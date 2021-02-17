@@ -26,7 +26,7 @@ import DuplicatedException from '../../domain/user/exception/DuplicatedException
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  @Post()
+  @Post('/register')
   @ApiCreatedResponse({
     description: 'The user has been successfully created',
     type: RegisterUserResponse,
