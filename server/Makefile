@@ -1,7 +1,7 @@
 install:
 	npm install
 
-dev:
+dev: infra/up
 	npm run start:dev
 
 build:
