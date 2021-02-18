@@ -22,7 +22,7 @@ describe('HealthController (e2e)', () => {
         .get(path)
         .expect(200)
         .expect((res: Response) => {
-          expect(res.text).toMatchSnapshot();
+          expect(res.body).toMatchSnapshot();
         });
     });
   });

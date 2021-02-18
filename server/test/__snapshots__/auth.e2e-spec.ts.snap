@@ -1,7 +1,51 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`AuthController (e2e) POST /api/auth/register should return the user 1`] = `"{\\"email\\":\\"test@test.com\\"}"`;
+exports[`AuthController (e2e) POST /api/auth/login should return successfully 1`] = `
+Object {
+  "token": Any<String>,
+}
+`;
 
-exports[`AuthController (e2e) POST /api/auth/register should throw bad request exception 1`] = `"{\\"statusCode\\":400,\\"message\\":[\\"email must be an email\\",\\"password must be longer than or equal to 6 characters\\"],\\"error\\":\\"Bad Request\\"}"`;
+exports[`AuthController (e2e) POST /api/auth/login should throw bad request exception 1`] = `
+Object {
+  "error": "Bad Request",
+  "message": Array [
+    "email must be an email",
+    "password must be longer than or equal to 6 characters",
+  ],
+  "statusCode": 400,
+}
+`;
 
-exports[`AuthController (e2e) POST /api/auth/register should throw conflict exception 1`] = `"{\\"statusCode\\":409,\\"message\\":\\"User already exists\\",\\"error\\":\\"Conflict\\"}"`;
+exports[`AuthController (e2e) POST /api/auth/login should throw user not found exception 1`] = `
+Object {
+  "error": "Not Found",
+  "message": "User not found",
+  "statusCode": 404,
+}
+`;
+
+exports[`AuthController (e2e) POST /api/auth/register should return the user 1`] = `
+Object {
+  "email": "test@test.com",
+}
+`;
+
+exports[`AuthController (e2e) POST /api/auth/register should throw bad request exception 1`] = `
+Object {
+  "error": "Bad Request",
+  "message": Array [
+    "email must be an email",
+    "password must be longer than or equal to 6 characters",
+  ],
+  "statusCode": 400,
+}
+`;
+
+exports[`AuthController (e2e) POST /api/auth/register should throw conflict exception 1`] = `
+Object {
+  "error": "Conflict",
+  "message": "User already exists",
+  "statusCode": 409,
+}
+`;

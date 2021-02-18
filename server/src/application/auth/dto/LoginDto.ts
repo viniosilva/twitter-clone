@@ -1,7 +1,7 @@
 import { IsEmail, IsNotEmpty, Length } from 'class-validator';
 
-export class RegisterUserRequest {
-  constructor(data: RegisterUserRequest) {
+export class LoginRequest {
+  constructor(data: LoginRequest) {
     this.email = data.email;
     this.password = data.password;
   }
@@ -15,6 +15,6 @@ export class RegisterUserRequest {
   password: string;
 }
 
-export interface RegisterUserResponse {
-  email: string;
+export interface LoginResponse {
+  token: string;
 }

@@ -3,6 +3,9 @@ import {
   Body,
   ConflictException,
   Controller,
+  HttpCode,
+  HttpStatus,
+  NotFoundException,
   Post,
 } from '@nestjs/common';
 import {
@@ -10,6 +13,8 @@ import {
   ApiConflictResponse,
   ApiCreatedResponse,
   ApiInternalServerErrorResponse,
+  ApiNotFoundResponse,
+  ApiOkResponse,
   ApiTags,
 } from '@nestjs/swagger';
 import InvalidRequestException from '../../application/auth/exception/InvalidRequestException';
@@ -19,6 +24,7 @@ import {
   RegisterUserResponse,
 } from './dto/RegisterUserDto';
 import DuplicatedException from '../../domain/user/exception/DuplicatedException';
+import UserNotFoundException from '../../domain/user/exception/NotFoundException';
 
 @Controller('/api/auth')
 @ApiTags('auth')
@@ -45,6 +51,31 @@ export class AuthController {
       }
       if (error instanceof DuplicatedException) {
         throw new ConflictException(error.message);
+      }
+      throw error;
+    }
+  }
+
+  @Post('/login')
+  @HttpCode(HttpStatus.OK)
+  @ApiOkResponse({
+    description: 'The user was found',
+    type: RegisterUserResponse,
+  })
+  @ApiBadRequestResponse({ description: 'Invalid user to find' })
+  @ApiNotFoundResponse({ description: 'User not found' })
+  async login(
+    @Body() request: RegisterUserRequest,
+  ): Promise<RegisterUserResponse> {
+    try {
+      const response = await this.authService.login(request);
+      return response;
+    } catch (error) {
+      if (error instanceof InvalidRequestException) {
+        throw new BadRequestException(error.errors);
+      }
+      if (error instanceof UserNotFoundException) {
+        throw new NotFoundException(error.message);
       }
       throw error;
     }

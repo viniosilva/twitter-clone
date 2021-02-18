@@ -4,7 +4,7 @@ import {
   RegisterUserResponse,
 } from './dto/RegisterUserDto';
 import UserRepository from '../../domain/user/UserRepository';
-import IUser from './schema/User';
+import { LoginRequest, LoginResponse } from './dto/LoginDto';
 
 export default class AuthService {
   constructor(
@@ -17,7 +17,24 @@ export default class AuthService {
   ): Promise<RegisterUserResponse> {
     this.authDomain.validateRequest(new RegisterUserRequest(request));
 
-    const user: IUser = await this.userRepository.create(request);
-    return { email: user.email };
+    const iUser = this.authDomain.buildUserRegister(
+      request.email,
+      request.password,
+    );
+    const { email } = await this.userRepository.create(iUser);
+    return { email };
+  }
+
+  async login(request: LoginRequest): Promise<LoginResponse> {
+    this.authDomain.validateRequest(new LoginRequest(request));
+
+    const password = this.authDomain.encrypt(request.password);
+    const { _id } = await this.userRepository.findByEmailAndPassword(
+      request.email,
+      password,
+    );
+
+    const token = this.authDomain.generateToken(_id);
+    return { token };
   }
 }

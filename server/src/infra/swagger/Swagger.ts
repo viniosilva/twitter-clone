@@ -1,8 +1,12 @@
 import { INestApplication } from '@nestjs/common';
-import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { DocumentBuilder, OpenAPIObject, SwaggerModule } from '@nestjs/swagger';
 
+type Options = Pick<
+  OpenAPIObject,
+  'openapi' | 'info' | 'servers' | 'security' | 'tags' | 'externalDocs'
+>;
 export default class Swagger {
-  private readonly options: any;
+  private readonly options: Options;
 
   constructor(title: string, description: string, version: string) {
     this.options = new DocumentBuilder()
@@ -14,7 +18,7 @@ export default class Swagger {
       .build();
   }
 
-  setup(app: INestApplication, path: string) {
+  setup(app: INestApplication, path: string): void {
     const document = SwaggerModule.createDocument(app, this.options);
     SwaggerModule.setup(path, app, document);
   }
