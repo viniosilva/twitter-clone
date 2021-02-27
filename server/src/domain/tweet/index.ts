@@ -1,4 +1,7 @@
+import UserRepository from '../user/UserRepository';
+import User from '../user/UserModel';
 import TweetRepository from './TweetRepository';
-import { TweetSchema } from './TweetSchema';
 
-export default new TweetRepository(TweetSchema);
+const userRepository = new UserRepository(User);
+
+export default new TweetRepository(userRepository);

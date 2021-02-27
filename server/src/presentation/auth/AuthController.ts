@@ -25,11 +25,13 @@ import {
 } from './dto/RegisterUserDto';
 import DuplicatedException from '../../domain/user/exception/DuplicatedException';
 import UserNotFoundException from '../../domain/user/exception/NotFoundException';
+import { LoginResponse } from './dto/LoginDto';
+import { LoginRequest } from '../../application/auth/dto/LoginDto';
 
 @Controller('/api/auth')
 @ApiTags('auth')
 @ApiInternalServerErrorResponse({ description: 'Internal server error' })
-export class AuthController {
+export default class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Post('/register')
@@ -65,8 +67,8 @@ export class AuthController {
   @ApiBadRequestResponse({ description: 'Invalid user to find' })
   @ApiNotFoundResponse({ description: 'User not found' })
   async login(
-    @Body() request: RegisterUserRequest,
-  ): Promise<RegisterUserResponse> {
+    @Body() request: LoginRequest,
+  ): Promise<LoginResponse> {
     try {
       const response = await this.authService.login(request);
       return response;

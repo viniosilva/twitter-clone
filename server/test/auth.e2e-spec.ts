@@ -3,7 +3,7 @@ import { INestApplication } from '@nestjs/common';
 import request, { Response } from 'supertest';
 import AppModule from '../src/AppModule';
 import mongodb from '../src/infra/mongodb';
-import UserSchema from '../src/domain/user/UserSchema';
+import UserModel from '../src/domain/user/UserModel';
 
 describe('AuthController (e2e)', () => {
   const registerPath = '/api/auth/register';
@@ -20,7 +20,7 @@ describe('AuthController (e2e)', () => {
   });
 
   afterEach(async () => {
-    await UserSchema.deleteMany();
+    await UserModel.deleteMany();
   });
 
   afterAll(async () => {
@@ -39,7 +39,7 @@ describe('AuthController (e2e)', () => {
         });
     });
 
-    it('should throw conflict exception', async () => {
+    it('should throw conflict exception', async () => {``
       const payload = { email: 'test@test.com', password: 'secret' };
       await request(app.getHttpServer()).post(registerPath).send(payload);
 
@@ -65,10 +65,13 @@ describe('AuthController (e2e)', () => {
   });
 
   describe('POST /api/auth/login', () => {
-    it('should return successfully', async () => {
-      const payload = { email: 'test@test.com', password: 'secret' };
-      await request(app.getHttpServer()).post(registerPath).send(payload);
+    const payload = { email: 'test@test.com', password: 'secret' };
 
+    beforeEach(() => {
+      return request(app.getHttpServer()).post(registerPath).send(payload);
+    });
+
+    it('should return successfully', async () => {
       return request(app.getHttpServer())
         .post(loginPath)
         .send(payload)
@@ -79,7 +82,7 @@ describe('AuthController (e2e)', () => {
     });
 
     it('should throw user not found exception', async () => {
-      const payload = { email: 'test@test.com', password: 'secret' };
+      const payload = { email: 'notfound@test.com', password: 'secret' };
 
       return request(app.getHttpServer())
         .post(loginPath)

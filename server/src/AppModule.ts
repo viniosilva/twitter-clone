@@ -1,16 +1,16 @@
 import { Module } from '@nestjs/common';
-import { TerminusModule } from '@nestjs/terminus';
 import { LoggerModule } from 'nestjs-pino';
 import { httpLogger } from './infra/logger/httpLogger';
 import AuthModule from './presentation/auth/AuthModule';
-import { HealthController } from './presentation/health/HealthController';
+import HealthModule from './presentation/health/HealthModule';
+import TweetModule from './presentation/tweet/TweetModule';
 
 @Module({
   imports: [
-    TerminusModule,
     LoggerModule.forRoot({ pinoHttp: httpLogger }),
+    HealthModule,
     AuthModule,
+    TweetModule,
   ],
-  controllers: [HealthController],
 })
 export default class AppModule {}

@@ -1,7 +1,8 @@
 import crypto from 'crypto';
 import jwt from 'jsonwebtoken';
 import { validateSync } from 'class-validator';
-import { IUser } from '../../domain/user/UserSchema';
+import { IUser } from '../../domain/user/UserModel';
+import JwtPayload from './dto/JwtPayload';
 import InvalidRequestException from './exception/InvalidRequestException';
 
 export default class AuthDomain {
@@ -40,10 +41,23 @@ export default class AuthDomain {
     return encryptedValue;
   }
 
-  generateToken(_id: string): string {
-    const token = jwt.sign({ _id }, this.jwtSecret, {
+  generateToken(userId: string): string {
+    const payload: JwtPayload = { userId };
+
+    const token = jwt.sign(payload, this.jwtSecret, {
       expiresIn: this.jwtExpiresIn,
     });
     return token;
+  }
+
+  getUserIdFromJwtAuthorization(authorization: string): string {
+    const token = this.getJwtFromAuthorization(authorization);
+    const payload = jwt.verify(token, this.jwtSecret) as JwtPayload;
+
+    return payload.userId;
+  }
+
+  private getJwtFromAuthorization(authorization: string): string {
+    return authorization.split(/\s/)[1];
   }
 }

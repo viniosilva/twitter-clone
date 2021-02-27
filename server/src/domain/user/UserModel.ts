@@ -11,10 +11,10 @@ export interface IUser {
 
 export type IUserDocument = IUser & Document;
 
-const UserSchema = new Schema<IUserDocument>({
+const UserModel = new Schema<IUserDocument>({
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   tweets: [TweetSchema],
 });
 
-export default mongodb.conn.model('User', UserSchema, 'users');
+export default mongodb.conn.model('User', UserModel, 'users');

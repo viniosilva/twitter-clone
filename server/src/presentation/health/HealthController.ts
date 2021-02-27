@@ -8,7 +8,7 @@ import {
 
 @Controller('/api/health')
 @ApiTags('health')
-export class HealthController {
+export default class HealthController {
   constructor(private health: HealthCheckService) {}
 
   @Get()

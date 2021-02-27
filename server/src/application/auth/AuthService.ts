@@ -37,4 +37,9 @@ export default class AuthService {
     const token = this.authDomain.generateToken(_id);
     return { token };
   }
+
+  getUserIdFromJwtAuthorization(authorization: string): string {
+    const userId = this.authDomain.getUserIdFromJwtAuthorization(authorization);
+    return userId;
+  }
 }

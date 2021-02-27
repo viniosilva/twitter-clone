@@ -3,11 +3,8 @@ import {
   LoginRequest as Request,
   LoginResponse as Response,
 } from '../../../application/auth/dto/LoginDto';
-
-const emailExample = 'test@test.com';
-
 export class LoginRequest implements Request {
-  @ApiProperty({ example: emailExample })
+  @ApiProperty({ example: 'test@test.com' })
   email: string;
 
   @ApiProperty({ example: 'S3CR3T' })
@@ -15,6 +12,6 @@ export class LoginRequest implements Request {
 }
 
 export class LoginResponse implements Response {
-  @ApiProperty({ example: emailExample })
-  email: string;
+  @ApiProperty({ example: 'emailExample' })
+  token: string;
 }
