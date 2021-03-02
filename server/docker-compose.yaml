@@ -9,6 +9,8 @@ services:
       - .:/usr/src/app
     env_file:
       - .env
+    environment:
+      MONGODB_URL: mongodb://root:secret@mongo:27017
     ports:
       - 3000:3000
   mongo:
