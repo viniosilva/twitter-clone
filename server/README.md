@@ -1,8 +1,9 @@
-# TSLego Nest Hello
+# Twitter Clone
 
 ## Description
 
-Typescript default Nest with CRUD user. :)
+Twitter clone for studies. :)
+
 Only copy and paste this folder and start coding!
 
 ## Installation
@@ -28,6 +29,9 @@ make up
 ```bash
 # unit tests
 make test
+
+# e2e tests
+make test/e2e
 
 # test coverage
 make test/cov
