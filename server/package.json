@@ -12,8 +12,8 @@
     "test": "jest",
     "test:updateSnapshots": "jest --updateSnapshot",
     "test:cov": "jest --coverage",
-    "test:e2e": "jest --config test/jest-e2e.json",
-    "test:e2e:updateSnapshots": "jest --config test/jest-e2e.json --updateSnapshot",
+    "test:e2e": "jest --runInBand --config test/jest-e2e.json",
+    "test:e2e:updateSnapshots": "jest --runInBand --config test/jest-e2e.json --updateSnapshot",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "format": "prettier --write \"src/**/*.ts\""
   },

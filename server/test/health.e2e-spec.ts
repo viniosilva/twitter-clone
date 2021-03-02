@@ -2,6 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
 import request, { Response } from 'supertest';
 import AppModule from '../src/AppModule';
+import mongodb from '../src/infra/mongodb';
 
 describe('HealthController (e2e)', () => {
   const path = '/api/health';
@@ -14,6 +15,10 @@ describe('HealthController (e2e)', () => {
 
     app = moduleFixture.createNestApplication();
     await app.init();
+  });
+
+  afterAll(async () => {
+    await mongodb.disconnect();
   });
 
   describe('GET /api/health', () => {

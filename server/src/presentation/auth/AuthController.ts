@@ -66,9 +66,7 @@ export default class AuthController {
   })
   @ApiBadRequestResponse({ description: 'Invalid user to find' })
   @ApiNotFoundResponse({ description: 'User not found' })
-  async login(
-    @Body() request: LoginRequest,
-  ): Promise<LoginResponse> {
+  async login(@Body() request: LoginRequest): Promise<LoginResponse> {
     try {
       const response = await this.authService.login(request);
       return response;

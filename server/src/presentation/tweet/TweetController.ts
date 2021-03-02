@@ -2,15 +2,19 @@ import {
   BadRequestException,
   Body,
   Controller,
+  Delete,
+  HttpCode,
+  HttpStatus,
+  Param,
   Post,
   Req,
-  Res,
   UseGuards,
 } from '@nestjs/common';
 import {
   ApiBadRequestResponse,
   ApiCreatedResponse,
   ApiInternalServerErrorResponse,
+  ApiNoContentResponse,
   ApiTags,
 } from '@nestjs/swagger';
 import InvalidRequestException from '../../application/tweet/exception/InvalidRequestException';
@@ -18,7 +22,6 @@ import { CreateTweetRequest } from '../../application/tweet/dto/CreateTweetDto';
 import { CreateTweetResponse } from './dto/CreateTweetDto';
 import TweetService from '../../application/tweet/TweetService';
 import { authGuard } from '../auth';
-import { Response } from 'express';
 
 @Controller('/api/tweets')
 @UseGuards(authGuard)
@@ -50,5 +53,17 @@ export default class TweetController {
       }
       throw error;
     }
+  }
+
+  @Delete('/:tweetId')
+  @HttpCode(HttpStatus.NO_CONTENT)
+  @ApiNoContentResponse({
+    description: 'The tweet has been successfully removed',
+  })
+  async removeTweet(
+    @Req() req: Record<string, unknown>,
+    @Param('tweetId') tweetId: number,
+  ): Promise<void> {
+    await this.tweetService.removeTweet(String(req.userId), Number(tweetId));
   }
 }

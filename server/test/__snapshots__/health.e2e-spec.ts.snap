@@ -2,9 +2,17 @@
 
 exports[`HealthController (e2e) GET /api/health should return successfully 1`] = `
 Object {
-  "details": Object {},
+  "details": Object {
+    "mongodb": Object {
+      "status": "up",
+    },
+  },
   "error": Object {},
-  "info": Object {},
+  "info": Object {
+    "mongodb": Object {
+      "status": "up",
+    },
+  },
   "status": "ok",
 }
 `;

@@ -49,3 +49,11 @@ Object {
   "statusCode": 409,
 }
 `;
+
+exports[`AuthController (e2e) POST /api/tweets should throw forbiden exception when authorization is empty 1`] = `
+Object {
+  "error": "Forbidden",
+  "message": "Forbidden resource",
+  "statusCode": 403,
+}
+`;

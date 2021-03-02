@@ -1,6 +1,4 @@
 import { Injectable, CanActivate, ExecutionContext } from '@nestjs/common';
-import { Response } from 'express';
-import { IncomingMessage } from 'http';
 import { Observable } from 'rxjs';
 import AuthService from '../../application/auth/AuthService';
 

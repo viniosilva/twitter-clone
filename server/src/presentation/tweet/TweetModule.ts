@@ -5,8 +5,6 @@ import TweetController from './TweetController';
 
 @Module({
   controllers: [TweetController],
-  providers: [
-    { provide: TweetService, useValue: tweetService },
-  ],
+  providers: [{ provide: TweetService, useValue: tweetService }],
 })
 export default class TweetModule {}

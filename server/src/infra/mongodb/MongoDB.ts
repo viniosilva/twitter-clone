@@ -11,6 +11,10 @@ export default class MongoDB {
     });
   }
 
+  isConnected(): boolean {
+    return [1, 2].includes(this.conn.readyState);
+  }
+
   async disconnect(): Promise<void> {
     await this.conn.close();
   }

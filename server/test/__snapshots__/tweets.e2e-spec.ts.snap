@@ -9,10 +9,13 @@ Object {
 }
 `;
 
-exports[`TweetController (e2e) POST /api/tweets should throw forbiden exception when authorization is empty 1`] = `
+exports[`TweetController (e2e) POST /api/tweets should throw bad request exception 1`] = `
 Object {
-  "error": "Forbidden",
-  "message": "Forbidden resource",
-  "statusCode": 403,
+  "error": "Bad Request",
+  "message": Array [
+    "content must be longer than or equal to 1 characters",
+    "content should not be empty",
+  ],
+  "statusCode": 400,
 }
 `;

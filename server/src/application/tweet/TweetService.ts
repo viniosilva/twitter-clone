@@ -18,4 +18,8 @@ export default class TweetService {
     const tweet = await this.tweetRepository.create(userId, iTweet);
     return tweet;
   }
+
+  async removeTweet(userId: string, tweetId: number): Promise<void> {
+    await this.tweetRepository.removeById(userId, tweetId);
+  }
 }

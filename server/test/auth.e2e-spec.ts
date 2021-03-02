@@ -8,6 +8,8 @@ import UserModel from '../src/domain/user/UserModel';
 describe('AuthController (e2e)', () => {
   const registerPath = '/api/auth/register';
   const loginPath = '/api/auth/login';
+  const tweetPath = '/api/tweets';
+
   let app: INestApplication;
 
   beforeEach(async () => {
@@ -39,7 +41,8 @@ describe('AuthController (e2e)', () => {
         });
     });
 
-    it('should throw conflict exception', async () => {``
+    it('should throw conflict exception', async () => {
+      ``;
       const payload = { email: 'test@test.com', password: 'secret' };
       await request(app.getHttpServer()).post(registerPath).send(payload);
 
@@ -99,6 +102,19 @@ describe('AuthController (e2e)', () => {
         .post(loginPath)
         .send(payload)
         .expect(400)
+        .expect((res: Response) => {
+          expect(res.body).toMatchSnapshot();
+        });
+    });
+  });
+
+  describe('POST /api/tweets', () => {
+    it('should throw forbiden exception when authorization is empty', () => {
+      const payload = { content: 'TEST' };
+      return request(app.getHttpServer())
+        .post(tweetPath)
+        .send(payload)
+        .expect(403)
         .expect((res: Response) => {
           expect(res.body).toMatchSnapshot();
         });

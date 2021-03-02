@@ -53,14 +53,63 @@ describe('TweetController (e2e)', () => {
         });
     });
 
-    it('should throw forbiden exception when authorization is empty', () => {
-      const payload = { content: 'TEST' };
+    it('should throw bad request exception', async () => {
+      const registerPayload = {
+        email: 'badtweet@test.com',
+        password: 'secret',
+      };
+      await request(app.getHttpServer())
+        .post(registerPath)
+        .send(registerPayload);
+
+      const response = await request(app.getHttpServer())
+        .post(loginPath)
+        .send(registerPayload);
+
+      const token = response.body.token;
+
+      const payload = { content: '' };
       return request(app.getHttpServer())
         .post(path)
+        .set('Authorization', `Bearer ${token}`)
         .send(payload)
-        .expect(403)
+        .expect(400)
         .expect((res: Response) => {
           expect(res.body).toMatchSnapshot();
+        });
+    });
+  });
+
+  describe('DELETE /api/tweets/:tweetId', () => {
+    it('should be successfully', async () => {
+      const registerPayload = {
+        email: 'removetweet@test.com',
+        password: 'secret',
+      };
+      await request(app.getHttpServer())
+        .post(registerPath)
+        .send(registerPayload);
+
+      const registerResponse = await request(app.getHttpServer())
+        .post(loginPath)
+        .send(registerPayload);
+
+      const token = registerResponse.body.token;
+
+      const payload = { content: 'TEST' };
+      const response = await request(app.getHttpServer())
+        .post(path)
+        .set('Authorization', `Bearer ${token}`)
+        .send(payload);
+
+      const tweetId = response.body._id;
+      return request(app.getHttpServer())
+        .delete(`${path}/${tweetId}`)
+        .set('Authorization', `Bearer ${token}`)
+        .send(payload)
+        .expect(204)
+        .expect((res: Response) => {
+          expect(res.body).toMatchObject({});
         });
     });
   });
