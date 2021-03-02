@@ -25,8 +25,7 @@ import {
 } from './dto/RegisterUserDto';
 import DuplicatedException from '../../domain/user/exception/DuplicatedException';
 import UserNotFoundException from '../../domain/user/exception/NotFoundException';
-import { LoginResponse } from './dto/LoginDto';
-import { LoginRequest } from '../../application/auth/dto/LoginDto';
+import { LoginRequest, LoginResponse } from './dto/LoginDto';
 
 @Controller('/api/auth')
 @ApiTags('auth')

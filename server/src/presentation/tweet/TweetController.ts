@@ -12,20 +12,21 @@ import {
 } from '@nestjs/common';
 import {
   ApiBadRequestResponse,
+  ApiBearerAuth,
   ApiCreatedResponse,
   ApiInternalServerErrorResponse,
   ApiNoContentResponse,
   ApiTags,
 } from '@nestjs/swagger';
 import InvalidRequestException from '../../application/tweet/exception/InvalidRequestException';
-import { CreateTweetRequest } from '../../application/tweet/dto/CreateTweetDto';
-import { CreateTweetResponse } from './dto/CreateTweetDto';
+import { CreateTweetRequest, CreateTweetResponse } from './dto/CreateTweetDto';
 import TweetService from '../../application/tweet/TweetService';
 import { authGuard } from '../auth';
 
 @Controller('/api/tweets')
 @UseGuards(authGuard)
 @ApiTags('tweet')
+@ApiBearerAuth('user')
 @ApiInternalServerErrorResponse({ description: 'Internal server error' })
 export default class TweetController {
   constructor(private readonly tweetService: TweetService) {}

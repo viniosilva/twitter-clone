@@ -12,9 +12,15 @@ export class CreateTweetRequest implements Request {
 }
 
 export class CreateTweetResponse implements Response {
+  @ApiProperty({ example: 1 })
+  _id: number;
+
   @ApiProperty({ example: tweetExample })
   content: string;
 
   @ApiProperty({ example: new Date() })
   createdAt: Date;
+
+  @ApiProperty({ example: ['USER_ID'] })
+  likes: string[]
 }
