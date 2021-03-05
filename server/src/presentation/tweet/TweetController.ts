@@ -42,10 +42,7 @@ export default class TweetController {
     @Body() request: CreateTweetRequest,
   ): Promise<CreateTweetResponse> {
     try {
-      const response = await this.tweetService.createTweet(
-        String(req.userId),
-        request,
-      );
+      const response = await this.tweetService.createTweet(String(req.userId), request);
 
       return response;
     } catch (error) {
@@ -61,10 +58,7 @@ export default class TweetController {
   @ApiNoContentResponse({
     description: 'The tweet has been successfully removed',
   })
-  async removeTweet(
-    @Req() req: Record<string, unknown>,
-    @Param('tweetId') tweetId: number,
-  ): Promise<void> {
+  async removeTweet(@Req() req: Record<string, unknown>, @Param('tweetId') tweetId: number): Promise<void> {
     await this.tweetService.removeTweet(String(req.userId), Number(tweetId));
   }
 }

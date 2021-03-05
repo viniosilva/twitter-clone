@@ -22,5 +22,5 @@ export class CreateTweetResponse implements Response {
   createdAt: Date;
 
   @ApiProperty({ example: ['USER_ID'] })
-  likes: string[]
+  likes: string[];
 }

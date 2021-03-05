@@ -12,13 +12,16 @@ export default class AuthDomain {
     private readonly jwtExpiresIn: number,
   ) {}
 
+  formatPassword(request: any): Record<string, unknown> {
+    if (!request.password) return request;
+    return { ...request, password: '******' };
+  }
+
   validateRequest(request: unknown): void {
     const validationErrors = validateSync(request);
 
     if (validationErrors.length > 0) {
-      const errors = validationErrors.map((error) =>
-        Object.values(error.constraints),
-      );
+      const errors = validationErrors.map((error) => Object.values(error.constraints));
       throw new InvalidRequestException([].concat(...errors));
     }
   }
@@ -33,10 +36,7 @@ export default class AuthDomain {
   }
 
   encrypt(value: string): string {
-    const encryptedValue = crypto
-      .createHmac('sha256', this.cryptoSecret)
-      .update(value)
-      .digest('hex');
+    const encryptedValue = crypto.createHmac('sha256', this.cryptoSecret).update(value).digest('hex');
 
     return encryptedValue;
   }

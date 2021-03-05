@@ -8,6 +8,25 @@ describe('AuthDomain', () => {
     authDomain = new AuthDomain('CRYPTO_SECRET', 'JWT_SECRET', 1000 * 60);
   });
 
+  describe('', () => {
+    it('should format password when it exists', () => {
+      const request = { email: 'test@test.com', password: '123' };
+      const response = authDomain.formatPassword(request);
+
+      expect(response).toMatchObject({
+        email: 'test@test.com',
+        password: '******',
+      });
+    });
+
+    it('should return the same object when the password not exist', () => {
+      const request = { email: 'test@test.com' };
+      const response = authDomain.formatPassword(request);
+
+      expect(response).toMatchObject(request);
+    });
+  });
+
   describe('validateRequest', () => {
     it('should be successfully', () => {
       const request = new RegisterUserRequest({

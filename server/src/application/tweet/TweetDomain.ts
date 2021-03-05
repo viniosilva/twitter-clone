@@ -7,9 +7,7 @@ export default class TweetDomain {
     const validationErrors = validateSync(request);
 
     if (validationErrors.length > 0) {
-      const errors = validationErrors.map((error) =>
-        Object.values(error.constraints),
-      );
+      const errors = validationErrors.map((error) => Object.values(error.constraints));
       throw new InvalidRequestException([].concat(...errors));
     }
   }

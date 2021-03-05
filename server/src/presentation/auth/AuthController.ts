@@ -19,10 +19,7 @@ import {
 } from '@nestjs/swagger';
 import InvalidRequestException from '../../application/auth/exception/InvalidRequestException';
 import AuthService from '../../application/auth/AuthService';
-import {
-  RegisterUserRequest,
-  RegisterUserResponse,
-} from './dto/RegisterUserDto';
+import { RegisterUserRequest, RegisterUserResponse } from './dto/RegisterUserDto';
 import DuplicatedException from '../../domain/user/exception/DuplicatedException';
 import UserNotFoundException from '../../domain/user/exception/NotFoundException';
 import { LoginRequest, LoginResponse } from './dto/LoginDto';
@@ -40,9 +37,7 @@ export default class AuthController {
   })
   @ApiBadRequestResponse({ description: 'Invalid user to create' })
   @ApiConflictResponse({ description: 'User email already exists' })
-  async registerUser(
-    @Body() request: RegisterUserRequest,
-  ): Promise<RegisterUserResponse> {
+  async registerUser(@Body() request: RegisterUserRequest): Promise<RegisterUserResponse> {
     try {
       const response = await this.authService.registerUser(request);
       return response;

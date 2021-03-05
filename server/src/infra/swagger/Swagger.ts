@@ -1,10 +1,7 @@
 import { INestApplication } from '@nestjs/common';
 import { DocumentBuilder, OpenAPIObject, SwaggerModule } from '@nestjs/swagger';
 
-type Options = Pick<
-  OpenAPIObject,
-  'openapi' | 'info' | 'servers' | 'security' | 'tags' | 'externalDocs'
->;
+type Options = Pick<OpenAPIObject, 'openapi' | 'info' | 'servers' | 'security' | 'tags' | 'externalDocs'>;
 export default class Swagger {
   private readonly options: Options;
 

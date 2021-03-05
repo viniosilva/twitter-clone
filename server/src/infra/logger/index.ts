@@ -1,5 +1,12 @@
 import { ServerResponse } from 'http';
 import { Options } from 'pino-http';
+import pino, { LoggerOptions } from 'pino';
+import { apiConfig } from '../../AppConfig';
+
+const config = {
+  base: { environment: apiConfig.environment },
+  level: apiConfig.logLevel,
+} as LoggerOptions;
 
 type Level = 'fatal' | 'error' | 'warn' | 'info' | 'debug' | 'trace';
 
@@ -9,6 +16,8 @@ export function customLogLevel(res: ServerResponse, err: Error): Level {
   return 'info';
 }
 
-export const httpLogger: Options = { customLogLevel };
+export const httpLogger: Options = { ...config, customLogLevel };
+
+export const logger = pino(config);
 
 // Ref: https://www.npmjs.com/package/pino-http

@@ -1,5 +1,5 @@
 import { ServerResponse } from 'http';
-import { customLogLevel } from './httpLogger';
+import { customLogLevel } from '.';
 
 describe('httpLogger', () => {
   describe('customLogLevel', () => {

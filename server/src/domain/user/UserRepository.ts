@@ -16,10 +16,7 @@ export default class UserRepository {
     }
   }
 
-  async findByEmailAndPassword(
-    email: string,
-    password: string,
-  ): Promise<IUser> {
+  async findByEmailAndPassword(email: string, password: string): Promise<IUser> {
     const user = await this.user.findOne({ email, password }).exec();
 
     if (!user) throw new NotFoundException();
@@ -34,9 +31,7 @@ export default class UserRepository {
   }
 
   async update(id: string, userDocument: IUser): Promise<IUser> {
-    const user = await this.user
-      .findByIdAndUpdate(id, userDocument, { new: true })
-      .exec();
+    const user = await this.user.findByIdAndUpdate(id, userDocument, { new: true }).exec();
 
     if (!user) throw new NotFoundException();
     return user;

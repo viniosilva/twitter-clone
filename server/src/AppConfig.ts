@@ -2,11 +2,13 @@ import { config } from 'dotenv';
 config();
 
 export const apiConfig = {
+  environment: String(process.env.NODE_ENV),
+  cryptoSecret: String(process.env.API_CRYPTO_SECRET),
   host: String(process.env.API_HOST),
+  jwtSecret: String(process.env.API_JWT_SECRET),
+  jwtExpiresIn: Number(process.env.API_JWT_EXPIRES_IN),
+  logLevel: String(process.env.API_LOG_LEVEL),
   port: Number(process.env.API_PORT),
-  cryptoSecret: String(process.env.CRYPTO_SECRET),
-  jwtSecret: String(process.env.JWT_SECRET),
-  jwtExpiresIn: Number(process.env.JWT_EXPIRES_IN),
 };
 
 export const mongodbConfig = {
