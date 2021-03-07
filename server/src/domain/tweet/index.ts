@@ -1,7 +1,5 @@
-import UserRepository from '../user/UserRepository';
-import User from '../user/UserModel';
+import { logger } from '../../infra/logger';
+import userRepository from '../user';
 import TweetRepository from './TweetRepository';
 
-const userRepository = new UserRepository(User);
-
-export default new TweetRepository(userRepository);
+export default new TweetRepository(userRepository, logger);

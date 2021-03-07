@@ -8,7 +8,7 @@ describe('AuthDomain', () => {
     authDomain = new AuthDomain('CRYPTO_SECRET', 'JWT_SECRET', 1000 * 60);
   });
 
-  describe('', () => {
+  describe('formatPassword', () => {
     it('should format password when it exists', () => {
       const request = { email: 'test@test.com', password: '123' };
       const response = authDomain.formatPassword(request);
@@ -59,8 +59,7 @@ describe('AuthDomain', () => {
       const user = authDomain.buildUserRegister('test@test.com', 'password');
       expect(user).toMatchObject({
         email: 'test@test.com',
-        password:
-          '133ea313937661ffca82e8d295e91ea2a966e2a0cea5b01216f1eae547669009',
+        password: '133ea313937661ffca82e8d295e91ea2a966e2a0cea5b01216f1eae547669009',
         tweets: [],
       });
     });
@@ -69,9 +68,7 @@ describe('AuthDomain', () => {
   describe('encrypt', () => {
     it('should return successfully', () => {
       const user = authDomain.encrypt('password');
-      expect(user).toEqual(
-        '133ea313937661ffca82e8d295e91ea2a966e2a0cea5b01216f1eae547669009',
-      );
+      expect(user).toEqual('133ea313937661ffca82e8d295e91ea2a966e2a0cea5b01216f1eae547669009');
     });
   });
 
@@ -79,6 +76,14 @@ describe('AuthDomain', () => {
     it('should return successfully', () => {
       const token = authDomain.generateToken('_ID');
       expect(token).toBeDefined();
+    });
+  });
+
+  describe('getUserIdFromJwtAuthorization', () => {
+    it('should return successfully', () => {
+      const token = authDomain.generateToken('_ID');
+      const userId = authDomain.getUserIdFromJwtAuthorization(`Bearer ${token}`);
+      expect(userId).toEqual('_ID');
     });
   });
 });

@@ -1,15 +1,19 @@
 import { Model } from 'mongoose';
+import { Logger } from 'pino';
 import DuplicatedException from './exception/DuplicatedException';
 import NotFoundException from './exception/NotFoundException';
 import { IUser, IUserDocument } from './UserModel';
 
 export default class UserRepository {
-  constructor(private readonly user: Model<IUserDocument>) {}
+  constructor(private readonly user: Model<IUserDocument>, private readonly logger: Logger) {}
 
-  async create(userDocument: IUser): Promise<IUser> {
+  async create(user: IUser): Promise<IUser> {
     try {
-      const user = await this.user.create(userDocument);
-      return user;
+      const userDocument = await this.user.create(user);
+      const iUser: IUser = { ...user, _id: userDocument._id, password: '******' };
+      this.logger.child({ user: iUser }).debug('User created');
+
+      return iUser;
     } catch (error) {
       if (error.code === 11000) throw new DuplicatedException();
       throw error;
@@ -25,15 +29,18 @@ export default class UserRepository {
 
   async findById(id: string): Promise<IUser> {
     const user = await this.user.findById(id).exec();
-
     if (!user) throw new NotFoundException();
+
     return user;
   }
 
-  async update(id: string, userDocument: IUser): Promise<IUser> {
-    const user = await this.user.findByIdAndUpdate(id, userDocument, { new: true }).exec();
+  async update(id: string, user: IUser): Promise<IUser> {
+    const userDocument = await this.user.findByIdAndUpdate(id, user, { new: true }).exec();
+    if (!userDocument) throw new NotFoundException();
 
-    if (!user) throw new NotFoundException();
-    return user;
+    const iUser: IUser = { ...user, _id: id, password: '******' };
+    this.logger.child({ user: iUser }).debug('User updated');
+
+    return iUser;
   }
 }
